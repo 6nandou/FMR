@@ -33,23 +33,18 @@ jobs:
 
       - name: Deploy to builds branch
         run: |
-          # Crear carpeta temporal para el APK
+
           mkdir -p out_apk
-          # Buscar el apk y moverlo a la carpeta temporal con un nombre limpio
           find . -name "*debug.apk" -exec cp {} out_apk/LectorTMO-VIP.apk \;
           
-          # Configurar git
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Cambiar a la rama builds (la crea si no existe)
           git checkout --orphan builds
           git rm -rf .
           
-          # Mover el APK de vuelta a la raíz de la nueva rama
           mv out_apk/LectorTMO-VIP.apk .
           
-          # Subir cambios forzando el reemplazo
           git add LectorTMO-VIP.apk
           git commit -m "Update Build: $(date)"
           git push origin builds --force
