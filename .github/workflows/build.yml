@@ -38,20 +38,7 @@ jobs:
           
           LAST_UPDATED=$(date +%s)
           
-          cat <<EOF > deploy/index.json
-          [
-            {
-              "name": "LectorTMO VIP",
-              "pkg": "eu.kanade.tachiyomi.extension.es.lectortmovip",
-              "apk": "LectorTMO-VIP.apk",
-              "lang": "es",
-              "code": 1,
-              "version": "1.0.0",
-              "nsfw": 1,
-              "last_updated": $LAST_UPDATED
-            }
-          ]
-          EOF
+          echo '[{"name":"LectorTMO VIP","pkg":"eu.kanade.tachiyomi.extension.es.lectortmovip","apk":"LectorTMO-VIP.apk","lang":"es","code":1,"version":"1.0.0","nsfw":1,"last_updated":'$LAST_UPDATED'}]' > deploy/index.min.json
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -60,6 +47,6 @@ jobs:
           git rm -rf .
           mv deploy/* .
           
-          git add LectorTMO-VIP.apk index.json
+          git add LectorTMO-VIP.apk index.min.json
           git commit -m "Update Build and Index: $(date)"
           git push origin builds --force
