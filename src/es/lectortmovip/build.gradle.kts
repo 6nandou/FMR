@@ -6,6 +6,15 @@ plugins {
 android {
     namespace = "eu.kanade.tachiyomi.extension.es.lectortmovip"
     compileSdk = 34
+
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("AndroidManifest.xml")
+            java.srcDirs("src")
+            res.srcDirs("res")
+        }
+    }
+
     defaultConfig {
         minSdk = 21
         targetSdk = 34
