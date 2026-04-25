@@ -25,9 +25,8 @@ jobs:
           gradle-version: 8.12
 
       - name: Build APK
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleRelease --stacktrace
+
+        run: gradle :src:es:lectortmovip:assembleRelease --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
