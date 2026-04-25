@@ -33,18 +33,33 @@ jobs:
 
       - name: Deploy to builds branch
         run: |
-
-          mkdir -p out_apk
-          find . -name "*debug.apk" -exec cp {} out_apk/LectorTMO-VIP.apk \;
+          mkdir -p deploy
+          find . -name "*debug.apk" -exec cp {} deploy/LectorTMO-VIP.apk \;
           
+          LAST_UPDATED=$(date +%s)
+          
+          cat <<EOF > deploy/index.json
+          [
+            {
+              "name": "LectorTMO VIP",
+              "pkg": "eu.kanade.tachiyomi.extension.es.lectortmovip",
+              "apk": "LectorTMO-VIP.apk",
+              "lang": "es",
+              "code": 1,
+              "version": "1.0.0",
+              "nsfw": 1,
+              "last_updated": $LAST_UPDATED
+            }
+          ]
+          EOF
+
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           git checkout --orphan builds
           git rm -rf .
+          mv deploy/* .
           
-          mv out_apk/LectorTMO-VIP.apk .
-          
-          git add LectorTMO-VIP.apk
-          git commit -m "Update Build: $(date)"
+          git add LectorTMO-VIP.apk index.json
+          git commit -m "Update Build and Index: $(date)"
           git push origin builds --force
