@@ -17,18 +17,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.12
 
-      - name: Regenerate Wrapper
-
-        run: gradle wrapper
-
       - name: Build APK
-
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --stacktrace
