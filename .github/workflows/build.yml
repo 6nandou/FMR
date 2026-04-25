@@ -37,8 +37,9 @@ jobs:
           find . -name "*debug.apk" -exec cp {} deploy/LectorTMO-VIP.apk \;
           
           LAST_UPDATED=$(date +%s)
+          JSON_CONTENT='[{"name":"LectorTMO VIP","pkg":"eu.kanade.tachiyomi.extension.es.lectortmovip","apk":"LectorTMO-VIP.apk","lang":"es","code":1,"version":"1.0.0","nsfw":1,"last_updated":'$LAST_UPDATED',"sources":[{"name":"LectorTMO VIP","lang":"es","id":"5371778608318819884","baseUrl":"https://lectortmo.vip"}]}]'
           
-          echo '[{"name":"LectorTMO VIP","pkg":"eu.kanade.tachiyomi.extension.es.lectortmovip","apk":"LectorTMO-VIP.apk","lang":"es","code":1,"version":"1.0.0","nsfw":1,"last_updated":'$LAST_UPDATED'}]' > deploy/index.min.json
+          echo "$JSON_CONTENT" > deploy/index.min.json
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
